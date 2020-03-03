@@ -35,7 +35,7 @@ const Form = () => {
     // handleGet();
     let newNote = Object.assign({},noteBook);
     Object.assign(newNote, ... [readData]);
-    // console.log('new Note :' , newNote);
+    console.log('new Note :' , newNote);
     // setNote(newNote);
 
   },[Object.keys(readData).length]);
