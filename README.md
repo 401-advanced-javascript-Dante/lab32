@@ -12,7 +12,6 @@
 
 - [front-end application](https://401-advanced-javascript-dante.github.io/lab31/) (GitHub Pages) -->
 
-
 ### Setup
 
 
@@ -21,16 +20,15 @@
 - e.g. `npm start`
 
 #### Tests
+- Describe any tests that you did not complete, skipped, etc None
+- Used Local-Server for testing 
+- api `http://localhost:3009/addnote`
+- getApi  `http://localhost:3009/showall`
+- Delete api  `http://localhost:3009/showall/id`
 
-- How do you run tests?
-`npm test`
-- Any tests of note?
-`react-scripts test --env=jsdom`
-- Describe any tests that you did not complete, skipped, etc
-None
 
 #### UML
 
 Link to an image of the UML for your application and response to events
-<!-- - [uml](https://i.ibb.co/cyYtQTR/lab28.jpg)(UML) -->
+- [uml](https://i.ibb.co/Hqs3mqM/custom.jpg)(UML)
 

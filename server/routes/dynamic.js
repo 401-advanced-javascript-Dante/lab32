@@ -25,6 +25,17 @@ async function showMyUsers (req , res){
 }
 
 
+// delete from db
+router.delete('/showall/:_id',deleteHandler);
+async function deleteHandler(req , res){
+  let id = req.params._id ;
+  console.log('id::::', id);
+  let data = await user.delete(id);
+  res.status(200).json(data);
+}
+
+
+
 module.exports= router ;
   
   

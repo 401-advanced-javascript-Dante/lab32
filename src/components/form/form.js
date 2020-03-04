@@ -9,86 +9,55 @@ let once = 0 ;
 const Form = () => {
 
   let temp ;
-  const [noteBook , setNote] = useState({});
-
-  const [readData, handlePost, handleGet] = useFetch(temp);
-  // setNote({ ... noteBook , ... readData});
+  const [readData, handlePost, handleGet , handleDelete,setReadDataFetch] = useFetch(temp);
   
-  // setInterval(()=>{
-  // },10000);
-    
-  // if(once === 0){
-  //   handleGet();
-  //   let newNote = Object.assign({},noteBook);
-  //   Object.assign(newNote, ... [readData]);
-    
-  //   console.log('new Note :' , newNote);
-
-  //   setNote(newNote);
-
-  //   once++ ;
-  // } 
+  if(once === 0){
+    handleGet();
+    once++ ;
+  } 
     
 
-  useEffect(()=>{
-
-    // handleGet();
-    let newNote = Object.assign({},noteBook);
-    Object.assign(newNote, ... [readData]);
-    console.log('new Note :' , newNote);
-    // setNote(newNote);
-
-  },[Object.keys(readData).length]);
-
-
-  console.log('****', readData , noteBook);
-
-  let testFun = (e) => {
+  let handleSubmit = (e) => {
     e.preventDefault();    
     let name = e.target.name.value;
     let note = e.target.note.value;
     let status = e.target.status.value;
     let diff = e.target.difficulty.value;
     
-    // let newNote = Object.assign({},noteBook);
     let newNote = {'name' : name , 'note': note , 'status':status , 'diff': diff};
     // take the data from here to post it <====   
     handlePost(newNote);
-    setNote( {... readData});
 
-    console.log('form readData', readData , 'setnote', noteBook);
     e.target.reset();
-    
-    console.log('after setNote?', noteBook);
   };
+
 
   useEffect(()=>{
 
-    let id = Object.keys(noteBook).length.toString() ;
+    let id = Object.keys(readData).length.toString() ;
 
     if(id > 0){
       document.title = `${id} Todo left`;
     }
   });
 
-  let changeState = (id) =>{
-    id = id.toString();
-    let newNote = Object.assign({},noteBook);
-    if(newNote[id].status === 'complete'){
-      newNote[id].status = 'incomplete';
-    }else{
-      newNote[id].status = 'complete';
-    }
 
-    setNote(newNote);
+  let changeState = (id) =>{
+    setReadDataFetch(id);
+  };
+
+  let deleteState = (_id,idx) => {
+    handleDelete(_id, idx);
   };
 
 
   return(
+    
     <>
+      {/* {console.log('**render**', readData , noteBook)} */}
 
       <div>
-        <form onSubmit = {testFun}>
+        <form onSubmit = {handleSubmit}>
 
           <label>
         Name : 
@@ -136,13 +105,14 @@ const Form = () => {
         <ul>
           {/* <li>{noteBook}</li> */}
           
-          {console.log('boook' , noteBook)}
+          {/* {console.log('boook' , readData)} */}
           { 
-            Object.keys(noteBook).map((val, idx) => {
-              return<fieldset key={idx} onClick={()=> changeState(idx)} className={noteBook[val].status} > <legend>Name: {noteBook[val].name}</legend>
-                <p> ToDo: {noteBook[val].note} </p>
-                <li> Status: {noteBook[val].status} </li>
-                <li> Difficulty: {noteBook[val].diff} </li>
+            Object.keys(readData).map((val, idx) => {
+              return<fieldset key={idx} className={readData[val].status} > <legend>Name: {readData[val].name}</legend>
+                <p> ToDo: {readData[val].note} </p>
+                <li onClick={()=> changeState(idx)}> Status: {readData[val].status} </li>
+                <li> Difficulty: {readData[val].diff} </li>
+                <button onClick={()=> deleteState(readData[val]._id , idx)} >Delete</button>
                 
               </fieldset>;
             })}
@@ -154,8 +124,6 @@ const Form = () => {
 
     </>
 
-  
-    
   );
 };
 

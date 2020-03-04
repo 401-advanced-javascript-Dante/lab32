@@ -19,14 +19,6 @@ const useFetch = (nothing)=>{
     Object.assign(oneMore ,...[data]);
 
     setReadData(oneMore);
-
-    console.log('one more ', oneMore);
-    console.log('ReadData:', readData);
-    console.log('response:', data);
-
-
-    // setReadData
-
   };
 
   const handlePost = async (data) => {
@@ -41,8 +33,42 @@ const useFetch = (nothing)=>{
     handleGet();
   };
 
+  const handleDelete = async(id , idx) => {
 
-  return[readData , handlePost , handleGet];
+    await fetch(`${getApi}/${id}`, {
+      method:'DELETE',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      }},
+    );
+
+
+    console.log('idx', typeof idx,idx);
+    let newNote = Object.assign({},readData);
+    console.log('check check check',newNote[idx]);
+    delete newNote[idx];
+    console.log('after delete', newNote);
+    setReadData(newNote);
+
+    console.log('readData', readData);
+    // handleGet();
+      
+  };
+
+
+  const setReadDataFetch = (id) => {
+    id = id.toString();
+    let newNote = Object.assign({},readData);
+    if(newNote[id].status === 'complete'){
+      newNote[id].status = 'incomplete';
+    }else{
+      newNote[id].status = 'complete';
+    }
+    setReadData(newNote);
+  };
+
+
+  return[readData , handlePost , handleGet , handleDelete, setReadDataFetch];
 
 };
 
